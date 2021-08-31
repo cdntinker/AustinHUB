@@ -45,44 +45,43 @@ namespace ESP_Color
     {
     }
 
-    Color(const std::uint8_t red, const std::uint8_t green, const std::uint8_t blue, const std::uint8_t alpha = 0xFFU) :
-      R(red / 255.0F),
-      G(green / 255.0F),
-      B(blue / 255.0F),
-      A(alpha / 255.0F)
+    Color(const std::uint8_t red, const std::uint8_t green, const std::uint8_t blue, const std::uint8_t alpha = 0xFFU) : R(red / 255.0F),
+                                                                                                                         G(green / 255.0F),
+                                                                                                                         B(blue / 255.0F),
+                                                                                                                         A(alpha / 255.0F)
     {
     }
 
-    Color operator+(const Color& color) const
+    Color operator+(const Color &color) const
     {
       return Color(R + color.R,
-        G + color.G,
-        B + color.B,
-        A + color.A);
+                   G + color.G,
+                   B + color.B,
+                   A + color.A);
     }
 
-    Color operator-(const Color& color) const
+    Color operator-(const Color &color) const
     {
       return Color(R - color.R,
-        G - color.G,
-        B - color.B,
-        A - color.A);
+                   G - color.G,
+                   B - color.B,
+                   A - color.A);
     }
 
     Color operator*(const float value) const
     {
       return Color(R * value,
-        G * value,
-        B * value,
-        A * value);
+                   G * value,
+                   B * value,
+                   A * value);
     }
 
     Color operator/(const float value) const
     {
       return Color(R / value,
-        G / value,
-        B / value,
-        A / value);
+                   G / value,
+                   B / value,
+                   A / value);
     }
 
     std::uint8_t R_Byte()
@@ -104,8 +103,8 @@ namespace ESP_Color
     {
       return static_cast<std::uint8_t>(A * 255.0F);
     }
-    
-     RGBi FromHsv(const float hue, const float saturation, const float value, const float alpha = 1.0)
+
+    RGBi FromHsv(const float hue, const float saturation, const float value, const float alpha = 1.0)
     {
       float r, g, b;
 
@@ -135,6 +134,9 @@ namespace ESP_Color
       case 5:
         r = value, g = p, b = q;
         break;
+      default:
+        r = 0, g = 0, b = 0;
+        break;
       }
 
       RGBi RGB;
@@ -144,8 +146,6 @@ namespace ESP_Color
       RGB.A = (alpha * 255.0F);
       return RGB;
     }
-
- 
 
     HSVf ToHsv()
     {
@@ -186,7 +186,6 @@ namespace ESP_Color
     }
 
   private:
-   
     static float threeway_max(float a, float b, float c)
     {
       return max(a, max(b, c));
