@@ -1,4 +1,10 @@
-To build in Tarduino...
+## To build in PlatformIO...
+
+Add a folder named `Distribution` at the root of the project. (for the Post Compile script...)
+
+**Build it.**
+
+## To build in Tarduino...
 
 Make sure you have the ESP8266 set up in your copy of Tarduino:
 
