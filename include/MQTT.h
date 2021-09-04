@@ -1,6 +1,8 @@
 #ifndef mqtt_setup_h
 #define mqtt_setup_h
 
+#include <Arduino.h>
+
 void settopics();
 void callback(char *topic, byte *payload, unsigned int length);
 void reconnect();

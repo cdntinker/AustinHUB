@@ -72,7 +72,7 @@
 // #include <PubSubClient.h>       // For MQTT
 #include "buttons.h"            // embeded button library for handling multi press events
 #include "varibles.h"           // non-edited varibles
-#include <Adafruit_MCP23008.h>  // For Output Enables
+// #include <Adafruit_MCP23008.h>  // For Output Enables
 // #include <Adafruit_INA219.h>    // For Current Measurements
 // #include <Adafruit_NeoPixel.h>  // for SK6812 RGBW LEDs
 
@@ -94,7 +94,7 @@
 // PubSubClient client(espClient);
 // Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, LED_TYPE + NEO_KHZ800);
 multiButton button = multiButton();                // regular GPIO button
-Adafruit_MCP23008 mcp;
+// Adafruit_MCP23008 mcp;
 // Adafruit_INA219 ina219_0(0x40);
 // Adafruit_INA219 ina219_1(0x41);
 // Adafruit_INA219 ina219_2(0x44);
@@ -113,7 +113,7 @@ Adafruit_MCP23008 mcp;
 
 #include "ina219.h"             //FIXED// embedded functions for INA219 measurements should be cpp
 #include "press.h"              // emdedded functions for handling port state should be cpp
-// #include "mqtt_setup.h"         // emdedded functions for wifi and mqtt       should be cpp
+#include "MQTT.h"         // emdedded functions for wifi and mqtt       should be cpp
 
 /* handlers for button callback */
 char * getMqttButtonAction(uint8_t state)
@@ -205,10 +205,12 @@ void setup() {
 
   parameterSETUP();                 // wifisave.h
 
-  mcp.begin();                      //             - start MCP - controls data lines and power fets
+  // mcp.begin();                      //             - start MCP - controls data lines and power fets
+  PRESS_init();
     for (uint8_t o = 0; o < 8; o++) // set all the MCP pins to output
   {
-    mcp.pinMode(o, OUTPUT);
+    // mcp.pinMode(o, OUTPUT);
+    PRESS_pinMode(o, OUTPUT);
   }
 
   portlockout();                    // press.h      - resets all ports to off
