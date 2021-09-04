@@ -3,6 +3,8 @@
 #ifndef customserver_h
 #define customserver_h
 
+#include "_wifisave.h"
+
 const char* PARAM_INPUT_1 = "state";
 
 void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type,

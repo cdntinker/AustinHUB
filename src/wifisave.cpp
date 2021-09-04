@@ -3,6 +3,15 @@
 #ifndef wifisave_h
 #define wifisave_h
 
+#include "DEFINES.h"
+#include "EXTERNS.h"
+
+#include "LIBRARIES.h"
+
+#include "debug.h"
+
+#include "_wifisave.h"
+
 uint8_t new_update = false;
 
 #if defined(ESP8266) // LittleFS used for esp8266
@@ -471,8 +480,6 @@ bool loadConfig()
 
 void parameterSETUP()
 {
-  DEBUG_Init("file system");
-
 #if defined(ESP8266)
   if (!LittleFS.begin())
   {

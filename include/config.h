@@ -4,11 +4,11 @@
 /* ----------------- General config -------------------------------- */
 
 /* Debugging */
-#define DEBUG_BUTTONS          true  // prints out button state
-#define DEBUG_WIFIBUTTONS      true  // prints out webpage button state
-#define DEBUG_JSON             false // prints out parsed json
-#define DEBUG_voltage          false // prints out voltage infomation
-#define DEBUG_current          false // prints out current information
+// #define DEBUG_BUTTONS          true  // prints out button state
+// #define DEBUG_WIFIBUTTONS      true  // prints out webpage button state
+// #define DEBUG_JSON             false // prints out parsed json
+// #define DEBUG_voltage          false // prints out voltage infomation
+// #define DEBUG_current          false // prints out current information
 
 uint16_t    portcurrent[4] = {0};  // max current for a port - max 3A (parts limit) // over ridden by config above
 

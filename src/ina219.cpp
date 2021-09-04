@@ -1,36 +1,40 @@
 /* functions for INA219 measurements */
+#include <Adafruit_INA219.h> // For Current Measurements
 
-#ifndef ina219_h
-#define ina219_h
+#include "DEFINES.h"
 
-bool INA_SETUP()
+#include "EXTERNS.h"
+
+#include "debug.h" // embeded degug library
+#include "neopixel.h"
+#include "MQTT.h"
+
+Adafruit_INA219 ina219_0(0x40);
+Adafruit_INA219 ina219_1(0x41);
+Adafruit_INA219 ina219_2(0x44);
+Adafruit_INA219 ina219_3(0x45);
+
+void INA_SETUP()
 {
-  DEBUG_Init("INA219");
-bool INA_Good = true;
-
   if (!ina219_0.begin())
   {
-    DEBUG_Trouble("Failed to find INA219 on port 1 - INA_SETUP");
+    Serial.println("Failed to find INA219 on port 1 - INA_SETUP");
     port_INA[0] = true;
-    INA_Good = false;
   }
   if (!ina219_1.begin())
   {
-    DEBUG_Trouble("Failed to find INA219 on port 2 - INA_SETUP");
+    Serial.println("Failed to find INA219 on port 2 - INA_SETUP");
     port_INA[1] = true;
-    INA_Good = false;
   }
   if (!ina219_2.begin())
   {
-    DEBUG_Trouble("Failed to find INA219 on port 3 - INA_SETUP");
+    Serial.println("Failed to find INA219 on port 3 - INA_SETUP");
     port_INA[2] = true;
-    INA_Good = false;
   }
   if (!ina219_3.begin())
   {
-    DEBUG_Trouble("Failed to find INA219 on port 4 - INA_SETUP");
+    Serial.println("Failed to find INA219 on port 4 - INA_SETUP");
     port_INA[3] = true;
-    INA_Good = false;
   }
 
   EMA_C[0] = ina219_0.getCurrent_mA(); //set EMA C for t=1
@@ -48,9 +52,7 @@ bool INA_Good = true;
   portcurrent[2] = portcurrent2;
   portcurrent[3] = portcurrent3;
 
-  DEBUG_LineOut("INA_SETUP done");
-
-  return INA_Good;
+  Serial.println("INA_SETUP done");
 }
 
 void voltread()
@@ -119,17 +121,20 @@ void voltread()
     if (voltlockout == 1) //under voltage condition
     {
       sprintf_P(mqtt_volt_buffer, PSTR("{\"Mode\":\"%s\", \"Volts\":%.2f}"), "Under Voltage", busvoltage);
-      client.publish(out_topic3, mqtt_volt_buffer);
+      // client.publish(out_topic3, mqtt_volt_buffer);
+      MQTT_send(out_topic3, mqtt_volt_buffer);
     }
     if (voltlockout == 2) //over voltage condition
     {
       sprintf_P(mqtt_volt_buffer, PSTR("{\"Mode\":\"%s\", \"Volts\":%.2f}"), "Over Voltage", busvoltage);
-      client.publish(out_topic3, mqtt_volt_buffer);
+      // client.publish(out_topic3, mqtt_volt_buffer);
+      MQTT_send(out_topic3, mqtt_volt_buffer);
     }
     if (voltlockout == 0) //normal condition
     {
       sprintf_P(mqtt_volt_buffer, PSTR("{\"Mode\":\"%s\", \"Volts\":%.2f}"), "Normal", busvoltage);
-      client.publish(out_topic3, mqtt_volt_buffer);
+      // client.publish(out_topic3, mqtt_volt_buffer);
+      MQTT_send(out_topic3, mqtt_volt_buffer);
     }
     lastvoltmqtt = millis();
   }
@@ -211,8 +216,9 @@ void get_INA(uint8_t port) // send what port you need a value calcuated for
       port_state[port] = 10; // this port is over current set error mode
       neo_update[port] = true;
       mcp_update[port] = true;
-      sprintf_P(mqtt_amp_buffer, PSTR("{\"NOTE\":\"%s\", \"Set Point\":%d, \"Port \":%d, \"milliAmps\":%d}"), "Over Current On Port", (int)portcurrent[port], (port + 1), (int)EMA_C[port]);
-      client.publish(out_topic2, mqtt_amp_buffer);
+      sprintf_P(mqtt_amp_buffer, PSTR("{\"Mode\":\"%s\", \"Set Point\":%d, \"Port\":%d, \"milliAmps\":%d}"), "Over Current On Port", (int)portcurrent[port], (port + 1), (int)EMA_C[port]);
+      // client.publish(out_topic2, mqtt_amp_buffer);
+      MQTT_send(out_topic2, mqtt_amp_buffer);
     }
 
     // calulate max current
@@ -225,8 +231,9 @@ void get_INA(uint8_t port) // send what port you need a value calcuated for
         neo_update[c] = true;
         mcp_update[c] = true;
       }
-      sprintf_P(mqtt_amp_buffer, PSTR("{\"NOTE\":\"%s\", \"Set Point\":%d, \"Total mA\":%d, \"Port 1 mA\":%d, \"Port 2 mA\":%d, \"Port 3 mA\":%d, \"Port 4 mA\":%d }"), "Over Current On HUB", (int)(systemcurrent - 500), (int)CALCmaxtotal, (int)EMA_C[0], (int)EMA_C[1], (int)EMA_C[2], (int)EMA_C[3]);
-      client.publish(out_topic2, mqtt_amp_buffer);
+      sprintf_P(mqtt_amp_buffer, PSTR("{\"Mode\":\"%s\", \"Set Point\":%d, \"Total mA\":%d, \"Port 1 mA\":%d, \"Port 2 mA\":%d, \"Port 3 mA\":%d, \"Port 4 mA\":%d }"), "Over Current On HUB", (int)(systemcurrent - 500), (int)CALCmaxtotal, (int)EMA_C[0], (int)EMA_C[1], (int)EMA_C[2], (int)EMA_C[3]);
+      // client.publish(out_topic2, mqtt_amp_buffer);
+      MQTT_send(out_topic2, mqtt_amp_buffer);
     }
     lastINAread[port] = millis();
   }
@@ -255,9 +262,8 @@ void mqtt_INA(uint8_t port, const char *m) // send what port you need a value se
     }
 
     sprintf_P(mqtt_amp_buffer, PSTR("{\"Port\":%d, \"Mode\":\"%s\", \"Volts\":%.2f, \"milliWatts\":%d, \"milliAmps\":%d }"), (port + 1), m, busvoltage, (int)EMA_W[port], (int)EMA_C[port]);
-    client.publish(out_topic2, mqtt_amp_buffer);
+    // client.publish(out_topic2, mqtt_amp_buffer);
+    MQTT_send(out_topic2, mqtt_amp_buffer);
     lastINAmqtt[port] = millis();
   }
 }
-
-#endif

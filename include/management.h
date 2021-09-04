@@ -76,6 +76,12 @@ const char management_html[] PROGMEM = R"rawliteral(
           <span class = "name-text">Memory - Sketch Size: </name-text></span>
           <span class = "host">%memsketch%</host></span>
         </div>
+
+        <div class = "name-sketch">
+          <span class = "name-text">Software Version: </name-text></span>
+          <span class = "host">1.1.0</host></span>
+        </div>
+        
         </div> <!-- Border -->
         
        <div class = "menu-buttons">

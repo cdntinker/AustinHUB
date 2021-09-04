@@ -13,7 +13,7 @@
 #ifndef BUTTONS_H
 #define BUTTONS_H
 
-#include "Arduino.h"  // needed for platformIO
+// #include "Arduino.h"  // needed for platformIO
 
 #define BUTTON_COUNT_MAX         20  // arbitrary max button amount - can be increased if needed
 

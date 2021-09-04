@@ -61,6 +61,11 @@ const char home_html[] PROGMEM = R"rawliteral(
           <span class = "host">%memsketch%</host></span>
         </div>
 
+        <div class = "name-sketch">
+          <span class = "name-text">Software Version: </name-text></span>
+          <span class = "host">1.1.0</host></span>
+        </div>
+
         </div> <!-- border -->
 
         </br>
@@ -69,35 +74,6 @@ const char home_html[] PROGMEM = R"rawliteral(
         
   <div class = "menu-menu">
     <div class = "menu-main">
-      <div class = "outer">
-        <div class = "status" id="status1" style="border-color: grey">
-          <div class = "inner">
-            <div class = "row">
-              <div class = "column3" id="port1">
-                <div class ="text">Volts:</div>
-                <div class ="text">Amps:</div>
-                <div class ="text"><p></p></div>
-                <div class ="text">Power:</div>
-                <div class ="text">Data:</div>
-              </div> <!-- column3 -->
-        
-              <div class = "column4">
-                <div class ="text" id="volt1">--- V</div>
-                <div class ="text" id="ma1">---- mA</div>
-                <div class ="text"><p></p></div>
-                <div class ="text" id="p1">-------</div>
-                <div class ="text" id="d1">-------</div>
-              </div> <!-- column4 -->
-            </div> <!-- row -->
-       
-            
-            <div class = "buttons ButtonClickable">
-              <button-1 onmousedown="mouseDown(1)" onmouseup="mouseUp(1)">Button 2</button-1>
-            </div> <!-- buttons ButtonClickable -->
-          </div> <!-- inner -->
-        </div> <!-- status -->
-      </div> <!-- outer -->
-      
       <div class = "outer">
         <div class = "status" id="status0" style="border-color: grey">
           <div class = "inner">
@@ -118,22 +94,20 @@ const char home_html[] PROGMEM = R"rawliteral(
                 <div class ="text" id="d0">-------</div>
               </div> <!-- column4 -->
             </div> <!-- row -->
-      
+       
+            
             <div class = "buttons ButtonClickable">
-              <button-0 onmousedown="mouseDown(0)" onmouseup="mouseUp(0)" >Button 1</button-0>
+              <button-0 onmousedown="mouseDown(0)" onmouseup="mouseUp(0)">Button 1</button-0>
             </div> <!-- buttons ButtonClickable -->
           </div> <!-- inner -->
         </div> <!-- status -->
       </div> <!-- outer -->
-    </div> <!-- menu-main -->
-   
-   
-    <div class = "menu-main">
+      
       <div class = "outer">
-        <div class = "status" id="status3" style="border-color: grey">
+        <div class = "status" id="status1" style="border-color: grey">
           <div class = "inner">
             <div class = "row">
-              <div class = "column3" id="port3">
+              <div class = "column3" id="port1">
                 <div class ="text">Volts:</div>
                 <div class ="text">Amps:</div>
                 <div class ="text"><p></p></div>
@@ -142,21 +116,24 @@ const char home_html[] PROGMEM = R"rawliteral(
               </div> <!-- column3 -->
         
               <div class = "column4">
-                <div class ="text" id="volt3">--- V</div>
-                <div class ="text" id="ma3">---- mA</div>
+                <div class ="text" id="volt1">--- V</div>
+                <div class ="text" id="ma1">---- mA</div>
                 <div class ="text"><p></p></div>
-                <div class ="text" id="p3">------</div>
-                <div class ="text" id="d3">------</div>
+                <div class ="text" id="p1">-------</div>
+                <div class ="text" id="d1">-------</div>
               </div> <!-- column4 -->
             </div> <!-- row -->
       
             <div class = "buttons ButtonClickable">
-              <button-3 onmousedown="mouseDown(3)" onmouseup="mouseUp(3)" >Button 4</button-3>
+              <button-1 onmousedown="mouseDown(1)" onmouseup="mouseUp(1)" >Button 2</button-1>
             </div> <!-- buttons ButtonClickable -->
           </div> <!-- inner -->
         </div> <!-- status -->
       </div> <!-- outer -->
-     
+    </div> <!-- menu-main -->
+   
+   
+    <div class = "menu-main">
       <div class = "outer">
         <div class = "status" id="status2" style="border-color: grey">
           <div class = "inner">
@@ -180,6 +157,34 @@ const char home_html[] PROGMEM = R"rawliteral(
       
             <div class = "buttons ButtonClickable">
               <button-2 onmousedown="mouseDown(2)" onmouseup="mouseUp(2)" >Button 3</button-2>
+            </div> <!-- buttons ButtonClickable -->
+          </div> <!-- inner -->
+        </div> <!-- status -->
+      </div> <!-- outer -->
+     
+      <div class = "outer">
+        <div class = "status" id="status3" style="border-color: grey">
+          <div class = "inner">
+            <div class = "row">
+              <div class = "column3" id="port3">
+                <div class ="text">Volts:</div>
+                <div class ="text">Amps:</div>
+                <div class ="text"><p></p></div>
+                <div class ="text">Power:</div>
+                <div class ="text">Data:</div>
+              </div> <!-- column3 -->
+        
+              <div class = "column4">
+                <div class ="text" id="volt3">--- V</div>
+                <div class ="text" id="ma3">---- mA</div>
+                <div class ="text"><p></p></div>
+                <div class ="text" id="p3">------</div>
+                <div class ="text" id="d3">------</div>
+              </div> <!-- column4 -->
+            </div> <!-- row -->
+      
+            <div class = "buttons ButtonClickable">
+              <button-3 onmousedown="mouseDown(3)" onmouseup="mouseUp(3)" >Button 4</button-3>
             </div> <!-- buttons ButtonClickable -->
           </div> <!-- inner -->
         </div> <!-- status -->

@@ -3,6 +3,8 @@
 #ifndef press_h
 #define press_h
 
+#include "MQTT.h"
+
 void portlockout()
 {
   for (uint8_t p = 0; p < 4; p++)
@@ -88,6 +90,9 @@ void portsSTATE() // handles the state of ports
     {
       mcp.digitalWrite(MCP_en[y], LOW);
       mcp.digitalWrite(MCP_data[y], LOW);
+        sprintf_P(mqtt_amp_buffer, PSTR("{\"Mode\":\"%s\", \"Port\":%d}"), "OFF", (y+1));
+        // client.publish(out_topic2, mqtt_amp_buffer);
+        MQTT_send(out_topic2, mqtt_amp_buffer);
       if (ws_connected != 0){ webSENDjson(); }
       mcp_update[y] = false;
     }

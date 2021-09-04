@@ -7,6 +7,8 @@
 #ifndef varibles_h
 #define varibles_h
 
+#include <Arduino.h>
+
 /* General */
 bool restartRequired = false;   // have we told the device to restart?
 bool factoryRequired = false;   // have we told the device to factory reset?
@@ -32,9 +34,9 @@ uint8_t MCP_en[5]     = {7,5,3,1};     // pin power fets connected on mcp
 uint8_t MCP_data[5]   = {6,4,2,0};     // pin data  fets connected on mcp
 
 /* LED's */
-#define LED_PIN                0                    // pin neopixels are connected to -- shouldn't need to be changed
-#define LED_COUNT              4                    // number of neopixels
-#define LED_TYPE               NEO_GRBW             // type of led's used
+// #define LED_PIN                0                    // pin neopixels are connected to -- shouldn't need to be changed
+// #define LED_COUNT              4                    // number of neopixels
+// #define LED_TYPE               NEO_GRBW             // type of led's used
 uint8_t neo_update[5]          = {false};           // do led's need to be updated - prevents flickering from constant updates
 uint8_t neo_override[5]        = {false};           // do led's need to be updated - prevents flickering from constant updates -- used in overrideMODE
 unsigned long lastdouble;                           // used for double flash animation
@@ -103,8 +105,8 @@ char mqtt_button_buffer[40]; // message from button buffer
 char mqtt_amp_buffer[100];   // message from INA buffer
 char mqtt_volt_buffer[40];   // message from Volts buffer
 
-const uint8_t mqtt_lwt_qos     = 0;
-const uint8_t mqtt_lwt_retain  = 1;
+// const uint8_t mqtt_lwt_qos     = 0;
+// const uint8_t mqtt_lwt_retain  = 1;
 
 /* mqtt config input */
 uint8_t  mqttC;           // what port to change

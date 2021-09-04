@@ -7,7 +7,7 @@
  * send data via mqtt                                                        // done - test5
  * MQTT inputs                                                               // done - test7
  * over ride mode                                                            // done - test7
- * OTA + config                                                              // OTA not tested
+ * OTA + config                                                              // done
  *  - setup main setup and loop functions                                    // done
  *  - adjust json save functions                                             // done
  *  - adjust website form params                                             // done
@@ -38,35 +38,44 @@
  * 
  */
 
-#include "FS.h"
-#include "ESPAsyncWebServer.h"
-#include <ArduinoJson.h>
+#include <Arduino.h>
+
+#include "DEFINES.h"
+
 #include "debug.h"             // embeded degug library
 
-#if defined(ESP8266)
-    #include "ESP8266WiFi.h"
-    #include "ESPAsyncTCP.h"
-    #include "flash_hal.h"
-    #include <LittleFS.h>
-#elif defined(ESP32)
-    #include "WiFi.h"
-    #include "AsyncTCP.h"
-    #include "Update.h"
-    #include "esp_int_wdt.h"
-    #include "esp_task_wdt.h"
-    #include "LITTLEFS.h"
-#endif
+#include "LIBRARIES.h"
+
+// #include "FS.h"
+
+// #include "ESPAsyncWebServer.h"
+// #include <ArduinoJson.h>
+
+// #if defined(ESP8266)
+//     #include "ESP8266WiFi.h"
+//     #include "ESPAsyncTCP.h"
+//     #include "flash_hal.h"
+//     #include <LittleFS.h>
+
+// #elif defined(ESP32)
+//     #include "WiFi.h"
+//     #include "AsyncTCP.h"
+//     #include "Update.h"
+//     #include "esp_int_wdt.h"
+//     #include "esp_task_wdt.h"
+//     #include "LITTLEFS.h"
+// #endif
 
 #include "config.h"             // config information
 #include "factory_settings.h"   // factory reset config
 
 
-#include <PubSubClient.h>       // For MQTT
+// #include <PubSubClient.h>       // For MQTT
 #include "buttons.h"            // embeded button library for handling multi press events
 #include "varibles.h"           // non-edited varibles
 #include <Adafruit_MCP23008.h>  // For Output Enables
-#include <Adafruit_INA219.h>    // For Current Measurements
-#include <Adafruit_NeoPixel.h>  // for SK6812 RGBW LEDs
+// #include <Adafruit_INA219.h>    // For Current Measurements
+// #include <Adafruit_NeoPixel.h>  // for SK6812 RGBW LEDs
 
 /* WEB PAGES */
 #include "homepage.h"           // website home page
@@ -82,19 +91,20 @@ AsyncWebServer server(80);      // declare ASYNC server library
 AsyncWebSocket ws("/ws");       // declare web socket
 
 /* library constructors here */
-WiFiClient espClient;
-PubSubClient client(espClient);
-Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, LED_TYPE + NEO_KHZ800);
+// WiFiClient espClient;
+// PubSubClient client(espClient);
+// Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, LED_TYPE + NEO_KHZ800);
 multiButton button = multiButton();                // regular GPIO button
 Adafruit_MCP23008 mcp;
-Adafruit_INA219 ina219_0(0x40);
-Adafruit_INA219 ina219_1(0x41);
-Adafruit_INA219 ina219_2(0x44);
-Adafruit_INA219 ina219_3(0x45);
+// Adafruit_INA219 ina219_0(0x40);
+// Adafruit_INA219 ina219_1(0x41);
+// Adafruit_INA219 ina219_2(0x44);
+// Adafruit_INA219 ina219_3(0x45);
 
 #include "neopixel.h"           // embedded animations for neopixels          should be cpp
 
-#include "wifisave.h"           // Saving new Config information              should be cpp
+// #include "wifisave.h"           // Saving new Config information              should be cpp
+#include "_wifisave.h"           // Saving new Config information              should be cpp
 #include "processing_items.h"   // processor for webpage varibles             should be cpp
 #include "customserver.h"       // manages the ASYNC server webpage serving   should be cpp
 #include "wifi.h"               // manages the wifi and AP conenctions        should be cpp
@@ -102,9 +112,9 @@ Adafruit_INA219 ina219_3(0x45);
 #include "ESP_Color.h"          // embede library for changing RGB - HSV - HEX for webpage
 #include "web_json.h"           // embedded handling of websocket json
 
-#include "ina219.h"             // embedded functions for INA219 measurements should be cpp
+#include "ina219.h"             //FIXED// embedded functions for INA219 measurements should be cpp
 #include "press.h"              // emdedded functions for handling port state should be cpp
-#include "mqtt_setup.h"         // emdedded functions for wifi and mqtt       should be cpp
+// #include "mqtt_setup.h"         // emdedded functions for wifi and mqtt       should be cpp
 
 /* handlers for button callback */
 char * getMqttButtonAction(uint8_t state)
@@ -180,7 +190,8 @@ void buttonPressed(uint8_t button, uint8_t state)
     Serial.println(getMqttButtonAction(state));
   }
       sprintf_P(mqtt_button_buffer, PSTR("{\"BUTTON\":%d, \"ACTION\":\"%s\"}"), mqtt_button, getMqttButtonAction(state));
-      client.publish(out_topic1, mqtt_button_buffer);
+      // client.publish(out_topic1, mqtt_button_buffer);
+      MQTT_send(out_topic1, mqtt_button_buffer);
       Serial.print("mqtt output: ");
       Serial.println(mqtt_button_buffer);
 }
@@ -203,8 +214,9 @@ void setup() {
 
   portlockout();                    // press.h      - resets all ports to off
 
-  strip.begin();                    //              - INITIALIZE NeoPixel strip object (REQUIRED)
-  strip.setBrightness(brightness);  //              - set strip brightness
+PIXELS_init();
+  // strip.begin();                    //              - INITIALIZE NeoPixel strip object (REQUIRED)
+  // strip.setBrightness(brightness);  //              - set strip brightness
   colorWipe(0,0,0,0);               // neopixel.h   - turn all the led's off
 
   INA_SETUP();                      // ina219.h     - setup the INA sensors
@@ -215,15 +227,15 @@ void setup() {
 
   customInit();                     // start server - starts ASYNC server - customserver.h
 
-
-   if (strcmp(mqtt_broker, "0") == 0)               // no broker declared
-    {Serial.println("no broker declared");}
-    else                                            // broker declared
-    {
-      settopics();                                  // mqtt_setup.h - set mqtt topics
-    client.setServer(mqtt_broker, mqtt_port);
-    client.setCallback(callback);
-    }
+MQTT_init();
+  //  if (strcmp(mqtt_broker, "0") == 0)               // no broker declared
+  //   {Serial.println("no broker declared");}
+  //   else                                            // broker declared
+  //   {
+  //     settopics();                                  // mqtt_setup.h - set mqtt topics
+  //   client.setServer(mqtt_broker, mqtt_port);
+  //   client.setCallback(callback);
+  //   }
 
 
   for (uint8_t i = 0; i < 4; i++)   // setup all the GPIO buttons
@@ -248,13 +260,14 @@ if (factoryRequired){deleteData();}    // checks if the esp needs a factory rese
     if (strcmp(mqtt_broker, "0") == 0) // no broker declared
     {}
     else                               // broker declared
-    {
-      if (!client.connected())
-      {
-        reconnect();
-      }
-     client.loop();
-    }
+      MQTT_loop();
+    // {
+    //   if (!client.connected())
+    //   {
+    //     reconnect();
+    //   }
+    //  client.loop();
+    // }
   }
 
   if (connected_update == true) // if we are conencted to wifi and mqtt go green briefly
