@@ -4,6 +4,7 @@
 
 #include "wifi.h"
 #include "EXTERNS.h"
+#include "debug.h"
 
 #include "neopixel.h"
 

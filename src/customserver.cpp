@@ -2,6 +2,7 @@
 
 #include "LIBRARIES.h"
 #include "EXTERNS.h"
+#include "debug.h"
 
 #include "wifisave.h"
 #include "customserver.h"
