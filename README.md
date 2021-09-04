@@ -2,7 +2,7 @@ To build in Tarduino...
 
 Make sure you have the ESP8266 set up in your copy of Tarduino:
 
-    [How to](https://randomnerdtutorials.com/how-to-install-esp8266-board-arduino-ide/)
+[How to](https://randomnerdtutorials.com/how-to-install-esp8266-board-arduino-ide/)
 
 Install the needed libraries:
 
@@ -18,4 +18,4 @@ Create a folder named `AustinHUB` inside your Arduino folder, copy the content o
 
 Tell Tarduino to open `AustinHUB.ino`...
 
-Eeewww...  Ick!
+Eeewww...  Ick!  :vomiting_face:
