@@ -8,8 +8,8 @@
 
 #include "MQTT.h"
 #include "neopixel.h"
-#include "_web_json.h"
-#include "_wifisave.h"
+#include "web_json.h"
+#include "wifisave.h"
 
 #include <PubSubClient.h>       // For MQTT
 

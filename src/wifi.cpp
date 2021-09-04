@@ -1,6 +1,5 @@
 /* Handles Wifi and AP mode - ON / OFF and timeout */
 
-#include <Arduino.h>
 #include "LIBRARIES.h"
 
 #include "wifi.h"

@@ -38,13 +38,12 @@
  * 
  */
 
-#include <Arduino.h>
+#include "LIBRARIES.h"
 
 #include "DEFINES.h"
 
 #include "debug.h"             // embeded degug library
 
-#include "LIBRARIES.h"
 
 // #include "FS.h"
 
@@ -77,18 +76,18 @@
 // #include <Adafruit_INA219.h>    // For Current Measurements
 // #include <Adafruit_NeoPixel.h>  // for SK6812 RGBW LEDs
 
-/* WEB PAGES */
-#include "homepage.h"           // website home page
-#include "management.h"         // Website OTA page
-#include "config_page.h"        // ESP html configuration page
-#include "failed.h"             // Something failed webpage
-#include "reboot.h"             // Website - ESP rebooting
-#include "finished.h"           // OTA success Webpage
-#include "config_finished.h"    // Saved Config Message Webpage
-#include "factory_html.h"       // Factory Reset Performed Webpage
+// /* WEB PAGES */
+// #include "homepage.h"           // website home page
+// #include "management.h"         // Website OTA page
+// #include "config_page.h"        // ESP html configuration page
+// #include "failed.h"             // Something failed webpage
+// #include "reboot.h"             // Website - ESP rebooting
+// #include "finished.h"           // OTA success Webpage
+// #include "config_finished.h"    // Saved Config Message Webpage
+// #include "factory_html.h"       // Factory Reset Performed Webpage
 
-AsyncWebServer server(80);      // declare ASYNC server library
-AsyncWebSocket ws("/ws");       // declare web socket
+// AsyncWebServer server(80);      // declare ASYNC server library
+// AsyncWebSocket ws("/ws");       // declare web socket
 
 /* library constructors here */
 // WiFiClient espClient;
@@ -104,7 +103,7 @@ Adafruit_MCP23008 mcp;
 #include "neopixel.h"           // embedded animations for neopixels          should be cpp
 
 // #include "wifisave.h"           // Saving new Config information              should be cpp
-#include "_wifisave.h"           // Saving new Config information              should be cpp
+#include "wifisave.h"           // Saving new Config information              should be cpp
 #include "processing_items.h"   // processor for webpage varibles             should be cpp
 #include "customserver.h"       // manages the ASYNC server webpage serving   should be cpp
 #include "wifi.h"               // manages the wifi and AP conenctions        should be cpp
@@ -250,7 +249,8 @@ MQTT_init();
 }
 
 void loop() {
-ws.cleanupClients();                   // cleans up old websocket clients
+// ws.cleanupClients();                   // cleans up old websocket clients
+WEB_cleanupClients();
 wifi_checkup();                        // checks if wifi is still connected and starts AP as needed - wifi.h
 if (restartRequired){OTA_Restart();}   // checks if the esp needs a reboot        - done via webpage / OTA - customserver.h
 if (factoryRequired){deleteData();}    // checks if the esp needs a factory reset - done via webpage / OTA - customserver.h and wifisave.h

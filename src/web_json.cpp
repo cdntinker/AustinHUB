@@ -1,5 +1,11 @@
-#ifndef web_json_h
-#define web_json_h
+// #ifndef web_json_h
+// #define web_json_h
+
+#include "LIBRARIES.h"
+#include "EXTERNS.h"
+
+#include "ESP_Color.h"
+#include "customserver.h"
 
 void webSENDjson()
 {
@@ -2126,7 +2132,8 @@ void webSENDjson()
   String buf;
   serializeJson(doc, buf); // package the data
 
-  ws.textAll(buf);       // send the data
+  // ws.textAll(buf);       // send the data
+  WEB_textAll(buf);
   lastUpdate = millis(); // last data update
 }
-#endif
+// #endif
