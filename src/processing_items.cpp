@@ -122,7 +122,7 @@ String processor(const String &var)
   if (var == "FirmwareVer")
   {
     String vering = "";
-    vering += FIRMWAREVERSION;
+    vering += STR(FIRMWAREVERSION);
     return vering;
   }
 
