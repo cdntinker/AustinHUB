@@ -4,9 +4,6 @@
  * shouldn't need to be edited
  */
 
-// #ifndef EXTERNS_h
-// #define EXTERNS_h
-
 #include <Arduino.h>
  
  //////////////////////////////////////
@@ -201,5 +198,3 @@ extern uint8_t     brightnessFACTORY;               // set strip brightness
 
 extern uint8_t     overrideMODEFACTORY;            // are we allowing local control or only mqtt?
 extern uint8_t     overrideWEBFACTORY;            // can the web interface control the hub?
-
-//  #endif // EXTERNS_h
