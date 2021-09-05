@@ -5,6 +5,7 @@
 
 #include "LIBRARIES.h"
 #include "EXTERNS.h"
+#include "DEFINES.h"
 
 #include "css.h"
 #include "SCRIPTS.h"
@@ -116,6 +117,13 @@ String processor(const String &var)
     String titleing = "";
     titleing += htmltitle;
     return titleing;
+  }
+
+  if (var == "FirmwareVer")
+  {
+    String vering = "";
+    vering += FIRMWAREVERSION;
+    return vering;
   }
 
   if (var == "dark")

@@ -20,7 +20,7 @@
 #define DEBOUNCE_PRESS_TIME 15   // delay to debounce the make part of the signal
 #define DEBOUNCE_RELEASE_TIME 30 // delay to debounce the break part of the signal
 #define MULTI_CLICK_TIME 250     // if 0, does not check for multiple button clicks
-#define HOLD_TIME 500            // minimum time of button press for mdButton.status() to return a -1 (long button press) \
+#define HOLD_TIME 500            // minimum time of button press for mdButton.status() to return a -1 (long button press)
                                  // all times in milliseconds
 // Special state values
 #define BUTTON_NO_STATE 0

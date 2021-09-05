@@ -13,6 +13,6 @@
 #define  mqtt_lwt_qos      0
 #define  mqtt_lwt_retain   1
 
-#define VERSION "1.1.0"
+#define FIRMWAREVERSION     "1.1.3 :)"
 
 #endif // DEFINES_H
