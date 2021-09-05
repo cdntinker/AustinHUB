@@ -19,7 +19,7 @@
 #include "factory_html.h"    // Factory Reset Performed Webpage
 
 AsyncWebServer server(80); // declare ASYNC server library
-AsyncWebSocket ws("/ws");       // declare web socket
+AsyncWebSocket ws("/ws");  // declare web socket
 
 const char *PARAM_INPUT_1 = "state";
 
@@ -245,6 +245,5 @@ void WEB_cleanupClients()
 
 void WEB_textAll(String buf)
 {
-      ws.textAll(buf);       // send the data
-
+    ws.textAll(buf); // send the data
 }
