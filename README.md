@@ -1,6 +1,6 @@
 ## To build in PlatformIO...
 
-Add a folder named `Distribution` at the root of the project. (for the Post Compile script...)
+You can either just download the repo & open the folder in VSCode or actually Clone the repository directly.
 
 **Build it.**
 
